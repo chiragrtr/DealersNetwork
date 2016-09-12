@@ -73,7 +73,7 @@ public class DealerController {
         String json = "";
         if (broadcastList.size() != 0) {
             json += "[";
-            for (int i = broadcastList.size()-1; i >= 0 ; i--) {
+            for (int i = broadcastList.size() - 1; i >= 0; i--) {
                 Broadcast broadcast = broadcastList.get(i);
                 String numOfBids = bidDAO.getNumOfBids(broadcast.getBroadcastId());
                 json += new Gson().toJson(broadcast);
@@ -253,38 +253,39 @@ public class DealerController {
         return numOfSelectedBids(request, response);
     }
 
-    @RequestMapping(value="/login", method = RequestMethod.POST)
-    public ModelAndView login(HttpServletRequest request, HttpServletResponse response){
-        if(!request.getParameter("sessionId").equals(request.getSession().getId())){
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
+        if (!request.getParameter("sessionId").equals(request.getSession().getId())) {
             return new ModelAndView("index");
         }
-        Dealer dealer = dealerDAO.login(request.getParameter("email"),request.getParameter("password"));
+        Dealer dealer = dealerDAO.login(request.getParameter("email"), request.getParameter("password"));
         ModelMap modelMap = new ModelMap();
-        modelMap.addAttribute("message","invalid");
-        if(dealer.getDealerId() == 0 ) return new ModelAndView("index",modelMap);
+        modelMap.addAttribute("message", "invalid");
+        if (dealer.getDealerId() == 0) return new ModelAndView("index", modelMap);
         HttpSession session = request.getSession();
-        session.setAttribute("dealerId","" + dealer.getDealerId());
-        session.setAttribute("dealerName","" + dealer.getName());
+        session.setAttribute("dealerId", "" + dealer.getDealerId());
+        session.setAttribute("dealerName", "" + dealer.getName());
+        session.setAttribute("loggedIn", true);
         return new ModelAndView("home");
     }
 
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public ModelAndView logout(HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
         System.out.println(request.getSession().getId());
         request.getSession().invalidate();
         return new ModelAndView("index");
     }
 
-    @RequestMapping(value="/register", method = RequestMethod.POST)
-    public ModelAndView register(HttpServletRequest request, HttpServletResponse response){
-        Dealer dealer = new Dealer(request.getParameter("name"),Long.parseLong(request.getParameter("phone")),new Date(),request.getParameter("email"),request.getParameter("password"));
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ModelAndView register(HttpServletRequest request, HttpServletResponse response) {
+        Dealer dealer = new Dealer(request.getParameter("name"), Long.parseLong(request.getParameter("phone")), new Date(), request.getParameter("email"), request.getParameter("password"));
         dealer = dealerDAO.createDealer(dealer);
         ModelMap modelMap = new ModelMap();
         modelMap.addAttribute("message", "duplicateRegistration");
-        if(dealer.getDealerId() == 0) return new ModelAndView("index",modelMap);
+        if (dealer.getDealerId() == 0) return new ModelAndView("index", modelMap);
         HttpSession session = request.getSession();
-        session.setAttribute("dealerId","" + dealer.getDealerId());
-        session.setAttribute("dealerName","" + dealer.getName());
+        session.setAttribute("dealerId", "" + dealer.getDealerId());
+        session.setAttribute("dealerName", "" + dealer.getName());
         return new ModelAndView("home");
     }
 

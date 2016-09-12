@@ -53,6 +53,9 @@
                 <font color="aqua">Your email id is already registered</font>
                 <%
                     }
+                    if (session.getAttribute("loggedIn") != null && session.getAttribute("loggedIn").toString().equals("true")) {
+                        request.getRequestDispatcher("home.jsp").forward(request, response);
+                    }
                 %>
                 <p class="forgot"><a href="#">Forgot Password?</a></p>
 
