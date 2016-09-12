@@ -102,4 +102,49 @@ public class Bid {
     public void setNotified(int notified) {
         this.notified = notified;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Bid bid = (Bid) o;
+
+        if (bidId != bid.bidId) return false;
+        if (broadcastId != bid.broadcastId) return false;
+        if (dealerId != bid.dealerId) return false;
+        if (Float.compare(bid.price, price) != 0) return false;
+        if (deliveryHours != bid.deliveryHours) return false;
+        if (status != bid.status) return false;
+        if (notified != bid.notified) return false;
+        return bidDate.equals(bid.bidDate);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = bidId;
+        result = 31 * result + broadcastId;
+        result = 31 * result + dealerId;
+        result = 31 * result + bidDate.hashCode();
+        result = 31 * result + (price != +0.0f ? Float.floatToIntBits(price) : 0);
+        result = 31 * result + deliveryHours;
+        result = 31 * result + status;
+        result = 31 * result + notified;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Bid{" +
+                "bidId=" + bidId +
+                ", broadcastId=" + broadcastId +
+                ", dealerId=" + dealerId +
+                ", bidDate=" + bidDate +
+                ", price=" + price +
+                ", deliveryHours=" + deliveryHours +
+                ", status=" + status +
+                ", notified=" + notified +
+                '}';
+    }
 }

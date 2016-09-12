@@ -83,4 +83,43 @@ public class Dealer {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Dealer dealer = (Dealer) o;
+
+        if (dealerId != dealer.dealerId) return false;
+        if (phone != dealer.phone) return false;
+        if (!name.equals(dealer.name)) return false;
+        if (!regDate.equals(dealer.regDate)) return false;
+        if (!email.equals(dealer.email)) return false;
+        return password.equals(dealer.password);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = dealerId;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + (int) (phone ^ (phone >>> 32));
+        result = 31 * result + regDate.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + password.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Dealer{" +
+                "dealerId=" + dealerId +
+                ", name='" + name + '\'' +
+                ", phone=" + phone +
+                ", regDate=" + regDate +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

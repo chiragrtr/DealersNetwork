@@ -15,6 +15,49 @@ public class Broadcast {
     private String make;
     private String model;
     private String color;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Broadcast broadcast = (Broadcast) o;
+
+        if (broadcastId != broadcast.broadcastId) return false;
+        if (dealerId != broadcast.dealerId) return false;
+        if (status != broadcast.status) return false;
+        if (!make.equals(broadcast.make)) return false;
+        if (!model.equals(broadcast.model)) return false;
+        if (!color.equals(broadcast.color)) return false;
+        return broadcastDate.equals(broadcast.broadcastDate);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = broadcastId;
+        result = 31 * result + dealerId;
+        result = 31 * result + make.hashCode();
+        result = 31 * result + model.hashCode();
+        result = 31 * result + color.hashCode();
+        result = 31 * result + broadcastDate.hashCode();
+        result = 31 * result + status;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Broadcast{" +
+                "broadcastId=" + broadcastId +
+                ", dealerId=" + dealerId +
+                ", make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", color='" + color + '\'' +
+                ", broadcastDate=" + broadcastDate +
+                ", status=" + status +
+                '}';
+    }
+
     private Date broadcastDate;
     private int status;
 
